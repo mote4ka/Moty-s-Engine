@@ -31,10 +31,10 @@ void Light::Draw()
 		glUniform4f(glGetUniformLocation(lightShader.shaderID, "LightColor"), LightColorF[0], LightColorF[1], LightColorF[2], LightColorF[3]);
 		glUniform3f(glGetUniformLocation(lightShader.shaderID, "scale"), LightScale.x, LightScale.y, LightScale.z);
 
-		if (LightType != 0) {
+		//if (LightType != 0) {
 			cubeVAO.Bind();
 			glDrawElements(GL_TRIANGLES, sizeof(LightCube.Indices) / sizeof(int), GL_UNSIGNED_INT, 0);
-		}
+		//}
 	}
 }
 

@@ -80,4 +80,5 @@ void Window::SetTitle(std::string title)
 Window::~Window()
 {
 	std::cout << "Closing window..\n";
+	Close();
 }

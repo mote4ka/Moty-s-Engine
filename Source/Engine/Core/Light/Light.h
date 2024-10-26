@@ -8,7 +8,7 @@
 
 #include<glm/glm.hpp>
 #include<glm/gtc/type_ptr.hpp>
-
+#include "filesystem"
 #include <iostream>
 
 #define DIRECTIONAL 0;
@@ -23,7 +23,6 @@ public:
 	void Draw();
 
 	int LightType = POINT;
-
 	//Doesnt work!! Need to fix
 	void setPosition(glm::vec3 newPos);
 
@@ -45,6 +44,10 @@ public:
 	EBO cubeEBO;
 
 	static inline Camera* CameraRef;
-	Shader lightShader{ "C:/Users/Матвей/source/repos/Moty's Engine/Source/Engine/Core/Light/shaders/light.vert", 
-						"C:/Users/Матвей/source/repos/Moty's Engine/Source/Engine/Core/Light/shaders/light.frag" };
+	std::string DirPath = (std::filesystem::current_path()).string();
+	std::string shaderPath = DirPath + std::string("/Source/Engine/Core/Light/shaders/");
+	std::string vertFile = "light.vert";
+	std::string fragFile = "light.frag";
+	Shader lightShader{ (shaderPath + vertFile).c_str(),
+						 (shaderPath + fragFile).c_str() };
 };

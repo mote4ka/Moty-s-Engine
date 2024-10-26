@@ -8,8 +8,11 @@ Camera::Camera(int windowWidth, int windowHeight)
 
 void Camera::Matrix(GLuint shaderID)
 {
-	const GLuint camMatLoc = glGetUniformLocation(shaderID, "CamMatrix");
-	glUniformMatrix4fv(camMatLoc, 1, GL_FALSE, glm::value_ptr(CameraMatrix));
+	const GLuint viewMatLoc = glGetUniformLocation(shaderID, "view");
+	const GLuint projMatLoc = glGetUniformLocation(shaderID, "projection");
+
+	glUniformMatrix4fv(viewMatLoc, 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(projMatLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 void Camera::UpdateMatrix(float FOVdeg, float nearPlane, float farPlane)
