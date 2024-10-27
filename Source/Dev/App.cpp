@@ -80,6 +80,9 @@ public:
 			ImGui::DragFloat3("Location", loc, 0.1f);
 			ImGui::DragFloat3("Rotation", rot, 0.1f);
 			ImGui::DragFloat3("Scale", sc, 0.1f);
+			if (ImGui::Button("Reload Shaders")) {
+				cube1.MeshShader.ReloadShaders();
+			}
 			ImGui::End();
 
 			cube1.setLocation(glm::vec3(loc[0], loc[1], loc[2]));
