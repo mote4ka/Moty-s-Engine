@@ -2,4 +2,5 @@
 3D OpenGL Engine written on C++
 
 <h1>Screenshots</h1>
-![image](https://github.com/user-attachments/assets/9dd34b8a-2566-4397-a8b1-8123803ffad9)
+
+![image](https://github.com/user-attachments/assets/b7f9a112-8ab4-43d9-840d-876e816224e8)
