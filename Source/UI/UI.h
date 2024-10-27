@@ -35,13 +35,15 @@ public:
 	UI( Window* win, Camera* cam);
 	~UI();
 	void NewFrame();
+	void Update();
+	void Draw();
 	void SetGuizmoOpetationMatrix(
 		glm::mat4* NewModelRef,
 		glm::vec3* Transform,
 		glm::vec3* Rotation,
 		glm::vec3* Scale);
 	void UpdateGuizmo();
-	void Draw();
+	
 
 	void testWin();
 

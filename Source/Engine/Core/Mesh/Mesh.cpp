@@ -49,7 +49,6 @@ void Mesh::Draw()
 	
 	//Mesh unis
 	glUniform3f(glGetUniformLocation(MeshShader.shaderID, "Rotation"), Rotation.x, Rotation.y, Rotation.z);
-	glUniform3f(glGetUniformLocation(MeshShader.shaderID, "scale"), Scale.x, Scale.y, Scale.z);
 	glUniform2f(glGetUniformLocation(MeshShader.shaderID, "uv"), uv.x, uv.y);
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
@@ -91,20 +90,7 @@ void Mesh::setLocation(glm::vec3 newLocation)
 	Location += dif;
 	model = glm::translate(model, dif);
 	MeshShader.Actvate();
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-}
-
-void Mesh::addLocation(glm::vec3 newLocation)
-{
-	Location += newLocation;
-	model = glm::translate(model, newLocation);
-}
-
-void Mesh::setLocationX(float x)
-{
-	model = glm::translate(model, glm::vec3(x - Location.x, 0.0f, 0.0f));
-	Location.x = x;
-
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
 }
 
 void Mesh::setRotation(glm::vec3 newRotation)
@@ -118,7 +104,7 @@ void Mesh::setRotation(glm::vec3 newRotation)
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
-void Mesh::addRotation(glm::vec3 newRotation)
+void Mesh::setDeltaRotation(glm::vec3 newRotation)
 {
 	Rotation += newRotation;
 	model = glm::rotate(model, glm::radians(Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -128,5 +114,6 @@ void Mesh::addRotation(glm::vec3 newRotation)
 
 void Mesh::setScale(glm::vec3 newScale)
 {
-	Scale = newScale;
+	//Some troubles with scale function
+	//glm::scale doesn work how i want
 }

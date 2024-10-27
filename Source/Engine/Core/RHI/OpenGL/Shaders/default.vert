@@ -14,7 +14,6 @@ out vec3 CurrentPos;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec3 scale;
 uniform vec2 uv;
 
 void main()
