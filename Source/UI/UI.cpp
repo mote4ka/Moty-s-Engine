@@ -26,6 +26,19 @@ void UI::NewFrame()
 	ImGui::NewFrame();
 }
 
+void UI::Update(){
+
+}
+
+void UI::Draw()
+{
+	if (CameraRef->MovementActive == false) {
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+}
+
+
 void UI::SetGuizmoOpetationMatrix(
 	glm::mat4* NewModelRef,
 	glm::vec3* Transform,
@@ -53,13 +66,6 @@ void UI::UpdateGuizmo()
 	}*/
 }
 
-void UI::Draw()
-{
-	if (CameraRef->MovementActive == false) {
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
-}
 
 void UI::testWin()
 {

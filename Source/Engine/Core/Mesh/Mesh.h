@@ -27,16 +27,10 @@ public:
 
 	void Draw();
 
-	// setTransform doesnt work correctly!!
 	void setLocation(glm::vec3 newLocation);
 
-	void addLocation(glm::vec3 newLocation);
-
-	//void setAxisLocation(glm::vec3)
-	void setLocationX(float x);
-
 	void setRotation(glm::vec3 newRotation);
-	void addRotation(glm::vec3 newRotation);
+	void setDeltaRotation(glm::vec3 newRotation);
 
 	void setScale(glm::vec3 newScale);
 
@@ -109,10 +103,13 @@ private:
 	std::string vertFile = "default.vert";
 	std::string fragFile = "default.frag";
 
-
-
 public: Shader MeshShader{ (shaderPath + vertFile).c_str(),
-						   (shaderPath + fragFile).c_str() };
+					   (shaderPath + fragFile).c_str() };
+	  int texNum = 0;
+	  glm::vec2 uv = glm::vec2(1.0f, 1.0f);
+	  glm::mat4 model = glm::mat4(1.0f);
+	  glm::mat4 scaleMat = glm::mat4(1.0f);
+
 private:
 	VAO MeshVAO;
 	VBO MeshVBO;
@@ -123,12 +120,7 @@ private:
 	glm::vec3 Rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	GLuint modelLoc;
-	glm::mat4 model = glm::mat4(1.0f);
 
-public:
-	int texNum = 0;
-	glm::vec2 uv = glm::vec2(1.0f, 1.0f);
-private:
 	Texture BaseTex{ (texturePath + std::string("container_d.png")).c_str(), GL_TEXTURE0, 1 };
 	Texture RoughnessTex{ (texturePath + std::string("container_r.png")).c_str(), GL_TEXTURE1, 1};
 	
