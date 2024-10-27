@@ -1,4 +1,4 @@
-# Moty-s-Engine
+# Moty's Engine
 3D OpenGL Engine written on C++
 
 <h1>Screenshots</h1>
