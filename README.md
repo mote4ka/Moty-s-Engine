@@ -2,7 +2,7 @@
 3D OpenGL Engine written on C++
 
 <h2>Added hot shader reload. Now shaders can reload directly in editor</h2>
-![2024-10-27 21-00-42_5](https://github.com/user-attachments/assets/037c5d80-950b-4454-9080-6dc5d72ba2c8)
+![image](https://github.com/user-attachments/assets/037c5d80-950b-4454-9080-6dc5d72ba2c8)
 
 
 <h1>Screenshots</h1>
