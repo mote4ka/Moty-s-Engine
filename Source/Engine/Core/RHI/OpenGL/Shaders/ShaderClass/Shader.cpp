@@ -2,11 +2,18 @@
 
 Shader::Shader(const char* VertShaderPath, const char* FragShaderPath)
 {
-	std::string vertexCodeStr = getFileContent(VertShaderPath);
-	const char* vertexCode = vertexCodeStr.c_str();
-	std::string fragCodeStr = getFileContent(FragShaderPath);
-	const char* fragCode = fragCodeStr.c_str();
+	this->VertShaderPath = VertShaderPath;
+	this->FragShaderPath = FragShaderPath;
+	
+	Create();
+}
 
+void Shader::Create()
+{
+	std::string vertexCodeStr = getFileContent(VertShaderPath.c_str());
+	const char* vertexCode = vertexCodeStr.c_str();
+	std::string fragCodeStr = getFileContent(FragShaderPath.c_str());
+	const char* fragCode = fragCodeStr.c_str();
 
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexCode, NULL);
@@ -23,6 +30,12 @@ Shader::Shader(const char* VertShaderPath, const char* FragShaderPath)
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragShader);
+}
+
+void Shader::ReloadShaders()
+{
+	Delete();
+	Create();
 }
 
 void Shader::Actvate()
