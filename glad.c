@@ -17,7 +17,7 @@
         --profile="core" --api="gl=3.3" --generator="c" --spec="gl" --extensions=""
     Online:
         https://glad.dav1d.de/#profile=core&language=c&specification=gl&loader=on&api=gl%3D3.3
-*/
+*/  
 
 #include <stdio.h>
 #include <stdlib.h>
