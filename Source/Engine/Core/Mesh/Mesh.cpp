@@ -110,10 +110,14 @@ void Mesh::setDeltaRotation(glm::vec3 newRotation)
 	model = glm::rotate(model, glm::radians(Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
 void Mesh::setScale(glm::vec3 newScale)
 {
-	//Some troubles with scale function
-	//glm::scale doesn work how i want
+	Scale = newScale;
+	model[0].x = newScale.x;
+	model[1].y = newScale.y;
+	model[2].z = newScale.z;
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }

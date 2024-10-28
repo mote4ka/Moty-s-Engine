@@ -79,7 +79,9 @@ public:
 			//ImGui::PushItemWidth(120.0f);
 			ImGui::DragFloat3("Location", loc, 0.1f);
 			ImGui::DragFloat3("Rotation", rot, 0.1f);
-			ImGui::DragFloat3("Scale", sc, 0.1f);
+			if (ImGui::DragFloat3("Scale", sc, 0.1f)) {
+				cube1.setScale(glm::vec3(sc[0], sc[1], sc[2]));
+			};
 			if (ImGui::Button("Reload Shaders")) {
 				cube1.MeshShader.ReloadShaders();
 			}
@@ -87,7 +89,7 @@ public:
 
 			cube1.setLocation(glm::vec3(loc[0], loc[1], loc[2]));
 			cube1.setRotation(glm::vec3(rot[0], rot[1], rot[2]));
-			cube1.setScale(glm::vec3(sc[0], sc[1], sc[2]));
+			
 
 			glUniform3f(glGetUniformLocation(cube1.MeshShader.shaderID, "CamPos"), cam.Position.x, cam.Position.y, cam.Position.z);
 

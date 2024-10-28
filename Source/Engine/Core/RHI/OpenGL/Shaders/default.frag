@@ -46,7 +46,8 @@ void main()
 			break;
 	}
 	//Ambient Lighting
-	vec3 Ambient = light.ambient * att * vec3(texture(mat.BaseColor, texCoord));
+	//vec3 Ambient = light.ambient * att * vec3(texture(mat.BaseColor, texCoord));
+	vec3 Ambient = vec3(0.1f) * att * vec3(texture(mat.BaseColor, texCoord));
 
 	//Diffuse Lighting
 	vec3 normalVec = normalize(Normal);
