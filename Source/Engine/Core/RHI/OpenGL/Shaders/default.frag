@@ -8,9 +8,7 @@ in vec2 texCoord;
 
 uniform vec3 Rotation;
 
-uniform int LightType;
 uniform vec3 CamPos;
-uniform vec4 LightColor;
 
 struct Material{
 	sampler2D BaseColor;
@@ -22,6 +20,10 @@ struct Light{
 	vec3 Position;
 	vec3 Direction;
 
+	int Type;
+	vec4 Color;
+	float Power;
+
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
@@ -32,7 +34,8 @@ void main()
 {
 	vec3 LightDirection;
 	float att = 1.0f;
-	switch(LightType){
+
+	switch(light.Type){
 		//Directional Light
 		case 0:
 			LightDirection = normalize(-light.Direction);
@@ -40,22 +43,22 @@ void main()
 		//Point light
 		case 1:
 			LightDirection = normalize(light.Position - CurrentPos);
-			vec3 fadeFac = vec3(1.0f, 0.14f, 0.07f);
+			//vec3 fadeFac = vec3(1.0f, 0.14f, 0.07f);
+			vec3 fadeFac = vec3(1.0f, 0.09f, 0.032f);
 			float Distance = length(light.Position - CurrentPos);
-			att = 1.0f / (fadeFac.x + fadeFac.y * Distance + fadeFac.z * (Distance*Distance));
+			att = light.Power / (fadeFac.x + fadeFac.y * Distance + fadeFac.z * (Distance*Distance));
 			break;
 	}
 	//Ambient Lighting
 	//vec3 Ambient = light.ambient * att * vec3(texture(mat.BaseColor, texCoord));
-	vec3 Ambient = vec3(0.1f) * att * vec3(texture(mat.BaseColor, texCoord));
+	vec3 Ambient = light.ambient * att * vec3(texture(mat.BaseColor, texCoord));
 
 	//Diffuse Lighting
 	vec3 normalVec = normalize(Normal);
 
 	float diffuse = max(dot(normalVec, LightDirection), 0.0f);
 	float gamma = 2.2f;
-	float lightPow = 2.0f;
-	vec3 Diffuse = light.diffuse * att * diffuse * pow(texture(mat.BaseColor, texCoord).rgb, vec3(gamma)) * vec3(lightPow);
+	vec3 Diffuse = light.diffuse * att * diffuse * pow(texture(mat.BaseColor, texCoord).rgb, vec3(gamma)) * vec3(light.Power);
 
 	//Specular Lighting
 	vec3 viewDirection = normalize(CamPos - CurrentPos);
@@ -67,7 +70,7 @@ void main()
 	vec3 Specular = light.specular * att * specular * vec3(texture(mat.specular, texCoord));
 
 	//Light result
-	vec4 LightResult = LightColor * vec4(Ambient + Diffuse + Specular, 1.0f);
+	vec4 LightResult = light.Color * vec4(Ambient + Diffuse + Specular, 1.0f);
 	
 	//Output
 	FragColor =  LightResult;

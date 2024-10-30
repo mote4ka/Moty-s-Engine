@@ -10,7 +10,7 @@ Texture::Texture(const char* image, GLenum slot, int isRGBA)
 	this->slot = slot;
 	int imgWidth, imgHeight, nrChannels;
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load(image, &imgWidth, &imgHeight, &nrChannels, 0);
+	unsigned char* data = stbi_load(image, &imgWidth, &imgHeight, &nrChannels, 3+isRGBA);
 	if (data)
 	{
 		glGenTextures(1, &ID);
