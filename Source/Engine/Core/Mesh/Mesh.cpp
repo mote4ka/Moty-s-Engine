@@ -36,7 +36,7 @@ Mesh::~Mesh()
 	BaseTex.Delete();
 }
 
-void Mesh::setCameraRef(Camera* CameraRefInpt)
+void Mesh::SetCameraRef(Camera* CameraRefInpt)
 {
 	CameraRef = CameraRefInpt;
 }
@@ -60,21 +60,13 @@ void Mesh::Draw()
 	glUniform3f(glGetUniformLocation(MeshShader.shaderID, "mat.specular"), 0.5f, 0.5f, 0.5f);
 	glUniform1f(glGetUniformLocation(MeshShader.shaderID, "mat.shineFac"), 0.5f);
 
-	//Light unis
-	if (lightsRef != nullptr) {
-		if (lightsRef->enable == true) {
-			glUniform1i(glGetUniformLocation(MeshShader.shaderID, "LightType"), lightsRef->LightType);
-			glUniform4f(glGetUniformLocation(MeshShader.shaderID, "LightColor"), lightsRef->LightColorF[0], lightsRef->LightColorF[1], lightsRef->LightColorF[2], lightsRef->LightColorF[3]);
-			glUniform3f(glGetUniformLocation(MeshShader.shaderID, "light.Position"), lightsRef->LightPos.x, lightsRef->LightPos.y, lightsRef->LightPos.z);
-			glUniform3f(glGetUniformLocation(MeshShader.shaderID, "light.Direction"), lightsRef->LightDirection.x, lightsRef->LightDirection.y, lightsRef->LightDirection.z);
-			glUniform3f(glGetUniformLocation(MeshShader.shaderID, "light.ambient"), 0.15f, 0.15f, 0.15f);
-			glUniform3f(glGetUniformLocation(MeshShader.shaderID, "light.diffuse"), 0.5f, 0.5f, 0.5f);
-			glUniform3f(glGetUniformLocation(MeshShader.shaderID, "light.specular"), 1.0f, 1.0f, 1.0f);
-		}
-		else {
-			glUniform4f(glGetUniformLocation(MeshShader.shaderID, "LightColor"), 0.0f, 0.0f, 0.0f, 0.0f);
-		}
+	//Light uniforms
+	//I use for here cause i dont know another method how to set uniforms for all lights sources
+	for (int i = 0; i < 1; i++) {
+		LightsRef->UpdateShadersUniform(MeshShader.shaderID);
 	}
+	
+	
 	RoughnessTex.texUnit(MeshShader, "mat.specular", 1);
 	RoughnessTex.Bind();
 	BaseTex.texUnit(MeshShader, "mat.BaseColor", 0);
@@ -84,7 +76,7 @@ void Mesh::Draw()
 	glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 }
 
-void Mesh::setLocation(glm::vec3 newLocation)
+void Mesh::SetLocation(glm::vec3 newLocation)
 {
 	glm::vec3 dif = newLocation - Location;
 	Location += dif;
@@ -93,7 +85,7 @@ void Mesh::setLocation(glm::vec3 newLocation)
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
 }
 
-void Mesh::setRotation(glm::vec3 newRotation)
+void Mesh::SetRotation(glm::vec3 newRotation)
 {
 	glm::vec3 dif = newRotation - Rotation;
 	Rotation += dif;
@@ -104,7 +96,7 @@ void Mesh::setRotation(glm::vec3 newRotation)
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
-void Mesh::setDeltaRotation(glm::vec3 newRotation)
+void Mesh::SetDeltaRotation(glm::vec3 newRotation)
 {
 	Rotation += newRotation;
 	model = glm::rotate(model, glm::radians(Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -113,11 +105,19 @@ void Mesh::setDeltaRotation(glm::vec3 newRotation)
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
-void Mesh::setScale(glm::vec3 newScale)
+void Mesh::SetScale(glm::vec3 newScale)
 {
 	Scale = newScale;
 	model[0].x = newScale.x;
 	model[1].y = newScale.y;
 	model[2].z = newScale.z;
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+}
+
+void Mesh::SetTexture(std::string Diff_name, std::string Rough_name, int t)
+{
+	BaseTex.Delete();
+	RoughnessTex.Delete();
+	Texture BaseTex{ (texturePath + Diff_name).c_str(), GL_TEXTURE3, t };
+	Texture RoughnessTex{ (texturePath + Rough_name).c_str(), GL_TEXTURE4, t };
 }

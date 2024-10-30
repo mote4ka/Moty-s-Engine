@@ -23,18 +23,20 @@ public:
 
 	Mesh(std::string vertFile = "default.vert", std::string fragFile = "default.frag", bool CreateTexture = true);
 	~Mesh();
-	static void setCameraRef(Camera* CameraRefInpt);
+	static void SetCameraRef(Camera* CameraRefInpt);
 
 	void Draw();
 
-	void setLocation(glm::vec3 newLocation);
+	void SetLocation(glm::vec3 newLocation);
 
-	void setRotation(glm::vec3 newRotation);
-	void setDeltaRotation(glm::vec3 newRotation);
+	void SetRotation(glm::vec3 newRotation);
+	void SetDeltaRotation(glm::vec3 newRotation);
 
-	void setScale(glm::vec3 newScale);
+	void SetScale(glm::vec3 newScale);
 
-	Light* lightsRef;
+	void SetTexture(std::string Diff_name, std::string Rough_name, int t = 0);
+
+	Light* LightsRef;
 
 	//this shit without "inline" give lnk2001, idk why
 	static inline Camera* CameraRef;
@@ -105,7 +107,6 @@ private:
 
 public: Shader MeshShader{ (shaderPath + vertFile).c_str(),
 					   (shaderPath + fragFile).c_str() };
-	  int texNum = 0;
 	  glm::vec2 uv = glm::vec2(1.0f, 1.0f);
 	  glm::mat4 model = glm::mat4(1.0f);
 	  glm::mat4 scaleMat = glm::mat4(1.0f);

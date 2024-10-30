@@ -24,16 +24,19 @@ public:
 
 	int LightType = POINT;
 	//Doesnt work!! Need to fix
-	void setPosition(glm::vec3 newPos);
+	void SetPosition(glm::vec3 newPos);
+	void GetPosition();
 
-	bool enable = true;
+	int UpdateShadersUniform(GLuint ShaderID);
+
+	bool Enable = true;
 
 	glm::vec4 LightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-	float LightColorF[4]{1.0f, 1.0f, 1.0f, 1.0f};
 	glm::vec3 LightPos = glm::vec3(1.5f, 0.0f, 0.0f);
-	glm::vec3 LightDirection = glm::vec3(-0.2f, -1.0f, -0.3f);
-	Cube LightCube;
+	glm::vec3 LightDirection = glm::vec3(0.4f, -1.0f, -3.0f);
+	float Power = 1.5f;
 
+	Cube LightCube;
 	glm::vec3 LightScale = glm::vec3(0.4f);
 
 	//#########################################################

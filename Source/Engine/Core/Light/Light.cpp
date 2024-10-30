@@ -21,14 +21,14 @@ Light::Light()
 
 void Light::Draw()
 {
-	if (enable == true) {
+	if (Enable == true) {
 
 		lightShader.Actvate();
 
 		CameraRef->Matrix(lightShader.shaderID);
 
 		glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderID, "model"), 1, GL_FALSE, glm::value_ptr(LightCube.model));
-		glUniform4f(glGetUniformLocation(lightShader.shaderID, "LightColor"), LightColorF[0], LightColorF[1], LightColorF[2], LightColorF[3]);
+		glUniform4f(glGetUniformLocation(lightShader.shaderID, "LightColor"), LightColor.x, LightColor.y, LightColor.z, LightColor.w);
 		glUniform3f(glGetUniformLocation(lightShader.shaderID, "scale"), LightScale.x, LightScale.y, LightScale.z);
 
 		//if (LightType != 0) {
@@ -38,8 +38,28 @@ void Light::Draw()
 	}
 }
 
-void Light::setPosition(glm::vec3 newPos)
+void Light::SetPosition(glm::vec3 newPos)
 {
-	LightPos = newPos - LightPos;
-	LightCube.model = glm::translate(LightCube.model, LightPos);
+	LightCube.model = glm::translate(LightCube.model, newPos - LightPos);
+	LightPos = newPos;
+}
+
+int Light::UpdateShadersUniform(GLuint ShaderID)
+{
+	if (Enable == true) {
+		glUniform3f(glGetUniformLocation(ShaderID, "light.Position"), LightPos.x, LightPos.y, LightPos.z);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.Direction"), LightDirection.x, LightDirection.y, LightDirection.z);
+		glUniform1i(glGetUniformLocation(ShaderID, "light.Type"), LightType);
+		glUniform4f(glGetUniformLocation(ShaderID, "light.Color"), LightColor.x, LightColor.y, LightColor.z, LightColor.w);
+		glUniform1f(glGetUniformLocation(ShaderID, "light.Power"), Power);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.ambient"), 0.09f, 0.09f, 0.09f);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.diffuse"), 0.5f, 0.5f, 0.5f);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.specular"), 1.0f, 1.0f, 1.0f);
+	}
+	else {
+		glUniform4f(glGetUniformLocation(ShaderID, "LightColor"), 0.0f, 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.ambient"), 0.15f, 0.15f, 0.15f);
+	}
+
+	return 0;
 }
