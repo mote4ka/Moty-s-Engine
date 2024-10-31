@@ -38,10 +38,11 @@ void Light::Draw()
 	}
 }
 
-void Light::SetPosition(glm::vec3 newPos)
+void Light::SetLocation(glm::vec3 newPos)
 {
 	LightCube.model = glm::translate(LightCube.model, newPos - LightPos);
 	LightPos = newPos;
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.shaderID, "model"), 1, GL_FALSE, glm::value_ptr(LightCube.model));
 }
 
 int Light::UpdateShadersUniform(GLuint ShaderID)
@@ -52,13 +53,15 @@ int Light::UpdateShadersUniform(GLuint ShaderID)
 		glUniform1i(glGetUniformLocation(ShaderID, "light.Type"), LightType);
 		glUniform4f(glGetUniformLocation(ShaderID, "light.Color"), LightColor.x, LightColor.y, LightColor.z, LightColor.w);
 		glUniform1f(glGetUniformLocation(ShaderID, "light.Power"), Power);
-		glUniform3f(glGetUniformLocation(ShaderID, "light.ambient"), 0.09f, 0.09f, 0.09f);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.ambient"), 0.08f, 0.08f, 0.08f);
 		glUniform3f(glGetUniformLocation(ShaderID, "light.diffuse"), 0.5f, 0.5f, 0.5f);
 		glUniform3f(glGetUniformLocation(ShaderID, "light.specular"), 1.0f, 1.0f, 1.0f);
 	}
 	else {
 		glUniform4f(glGetUniformLocation(ShaderID, "LightColor"), 0.0f, 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(ShaderID, "light.ambient"), 0.15f, 0.15f, 0.15f);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.ambient"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.diffuse"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.specular"), 0.0f, 0.0f, 0.0f);
 	}
 
 	return 0;

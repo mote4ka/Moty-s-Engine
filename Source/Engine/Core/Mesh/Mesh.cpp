@@ -67,7 +67,7 @@ void Mesh::Draw()
 	}
 	
 	
-	RoughnessTex.texUnit(MeshShader, "mat.specular", 1);
+	RoughnessTex.texUnit(MeshShader, "mat.SpecularTexture", 1);
 	RoughnessTex.Bind();
 	BaseTex.texUnit(MeshShader, "mat.BaseColor", 0);
 	BaseTex.Bind();
@@ -114,10 +114,19 @@ void Mesh::SetScale(glm::vec3 newScale)
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }
 
-void Mesh::SetTexture(std::string Diff_name, std::string Rough_name, int t)
+void Mesh::SetTexture(std::string Diff_name, std::string Rough_name)
 {
 	BaseTex.Delete();
 	RoughnessTex.Delete();
-	Texture BaseTex{ (texturePath + Diff_name).c_str(), GL_TEXTURE3, t };
-	Texture RoughnessTex{ (texturePath + Rough_name).c_str(), GL_TEXTURE4, t };
+	Texture BaseTex{ (texturePath + Diff_name).c_str(), 0};
+	Texture RoughnessTex{ (texturePath + Rough_name).c_str(), 0};
+}
+
+std::string Mesh::GetTextureName()
+{
+	int end_index = BaseTex.FilePath.find("img/") + 4;
+	std::string FilePath = BaseTex.FilePath;
+	std::string Name = FilePath.erase(0,end_index);
+	std::cout << Name << "\n";
+	return Name;
 }

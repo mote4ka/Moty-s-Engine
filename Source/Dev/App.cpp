@@ -26,7 +26,7 @@ public:
 		Mesh cube1;
 		Mesh cube2;
 		cube1.SetLocation(glm::vec3(0.0f, 0.0f, 0.0f));
-		cube2.SetLocation(glm::vec3(1.5f, -1.0f, 0.0f));
+		cube2.SetLocation(glm::vec3(0.0f, -0.6f, 0.0f));
 		cube2.SetScale(glm::vec3(10.f, 0.5f, 10.0f));
 
 		cube1.SetCameraRef(&cam);
@@ -34,12 +34,19 @@ public:
 		
 		Light light1;
 		light1.CameraRef = &cam;
+		light1.SetLocation(glm::vec3(-1.0f, 1.0f, 0.0f));
 
 		cube1.LightsRef = &light1;
 		cube2.LightsRef = &light1;
 
-		cube1.SetTexture("bp/bp_d.png", "bp/bp_r.png");
-		cube2.SetTexture("garage_floor_d.png", "garage_floor_r.png");
+		cube1.SetTexture("wooden_planks/wooden_planks_d.png", "wooden_planks/wooden_planks_r.png");
+		cube2.SetTexture("garage_floor/garage_floor_d.png", "garage_floor/garage_floor_r.png");
+
+		const char* textures[4] = { "wooden_planks/wooden_planks_d.png" , "red_brick/red_brick_d.png",
+									"metal_plate/metal_plate_d.png", "container_d.png" };
+		std::string current_texture = "wooden_planks/wooden_planks_d.png";
+
+		cube1.GetTextureName();
 
 		UI ui(&win, &cam);
 		ImGui::LoadStyles();
@@ -50,6 +57,7 @@ public:
 		float rot[3] = { 0.0f, 0.0f, 0.0f };
 		float sc[3] = { 1.0f, 1.0f, 1.0f };
 		float cl[4] = { 1.0f, 1.0f, 1.0f, 1.0f};
+		bool selected = false;
 
 		glEnable(GL_DEPTH_TEST);
 		while (!win.WindowShouldClose()) {
@@ -74,22 +82,14 @@ public:
 			//UI things
 			ui.NewFrame();
 
-			//ImGui::SetNextWindowSize({ 250.f,368.f });
-			//ImGui::SetCursorPos({ 0.0f,0.0f });
-			ImGui::Begin("Properties");
-			ImGui::SetCursorPos({ 15.0f, 30.0f });
+			ImGui::Begin("Properties",0, ImGuiWindowFlags_NoCollapse);
 			ImGui::Checkbox("Light", &light1.Enable);
-			ImGui::SetCursorPos({ 15.0f, 60.0f });
-			//ImGui::PushItemWidth(120.0f);
 			
 			ImGui::ColorEdit4("Color", cl);
 			light1.LightColor.x = cl[0];
 				light1.LightColor.y = cl[1];
 				light1.LightColor.z = cl[2];
 				light1.LightColor.w = cl[3];
-			//ImGui::PopItemWidth();
-			//ImGui::SetCursorPos({ 15.0f, 90.0f });
-			//ImGui::PushItemWidth(120.0f);
 			ImGui::DragFloat3("Location", loc, 0.1f);
 			cube1.SetLocation(glm::vec3(loc[0], loc[1], loc[2]));
 			ImGui::DragFloat3("Rotation", rot, 0.1f);
@@ -98,11 +98,22 @@ public:
 				cube1.SetScale(glm::vec3(sc[0], sc[1], sc[2]));
 			};
 
-
-
 			if (ImGui::Button("Reload Shaders")) {
 				cube1.MeshShader.ReloadShaders();
 				cube2.MeshShader.ReloadShaders();
+			}
+			if (ImGui::BeginCombo("Texture", current_texture.c_str())) {
+
+				for (int n = 0; n < 3; n++) {
+					//cube1.GetTextureName();
+					bool selected = (textures[n] == current_texture);
+					if (ImGui::Selectable(textures[n], selected)) { 
+						current_texture = textures[n]; 
+						cube1.SetTexture(current_texture, "wooden_planks/wooden_planks_r.png");
+					}
+					else{ ImGui::SetItemDefaultFocus(); }
+				}
+				ImGui::EndCombo();
 			}
 			ImGui::End();
 
