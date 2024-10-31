@@ -12,7 +12,7 @@ uniform vec3 CamPos;
 
 struct Material{
 	sampler2D BaseColor;
-	sampler2D specular;
+	sampler2D SpecularTexture;
 	float shineFac;
 };
 uniform Material mat;
@@ -67,7 +67,7 @@ void main()
 	vec3 reflectDirection = reflect(-LightDirection, normalVec);
 	//float specular = mat.shineFac * pow(max(dot(viewDirection, reflectDirection), 0.0), 32);
 	float specular = mat.shineFac * pow(max(dot(Normal, halfwayDirection), 0.0), 32);
-	vec3 Specular = light.specular * att * specular * vec3(texture(mat.specular, texCoord));
+	vec3 Specular = light.specular * att * specular * vec3(texture(mat.SpecularTexture, texCoord));
 
 	//Light result
 	vec4 LightResult = light.Color * vec4(Ambient + Diffuse + Specular, 1.0f);

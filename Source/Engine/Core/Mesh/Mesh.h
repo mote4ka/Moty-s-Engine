@@ -34,7 +34,8 @@ public:
 
 	void SetScale(glm::vec3 newScale);
 
-	void SetTexture(std::string Diff_name, std::string Rough_name, int t = 0);
+	void SetTexture(std::string Diff_name, std::string Rough_name);
+	std::string GetTextureName();
 
 	Light* LightsRef;
 
@@ -122,7 +123,7 @@ private:
 
 	GLuint modelLoc;
 
-	Texture BaseTex{ (texturePath + std::string("container_d.png")).c_str(), GL_TEXTURE0, 1 };
-	Texture RoughnessTex{ (texturePath + std::string("container_r.png")).c_str(), GL_TEXTURE1, 1};
+	Texture BaseTex{ (texturePath + std::string("container_d.png")).c_str(), 1 };
+	Texture RoughnessTex{ (texturePath + std::string("container_r.png")).c_str(), 1};
 	
 };

@@ -1,20 +1,19 @@
 #include "Texture.h"
+#define TextureSlot(N) GL_TEXTURE##N
 
-
-Texture::Texture()
+Texture::Texture(const char* imagePath, int isRGBA)
 {
-}
-
-Texture::Texture(const char* image, GLenum slot, int isRGBA)
-{
-	this->slot = slot;
+	FilePath = imagePath;
+	static int TextureN;
+	ActiveSlot = GL_TEXTURE0 + TextureN;
+	TextureN++;
 	int imgWidth, imgHeight, nrChannels;
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load(image, &imgWidth, &imgHeight, &nrChannels, 3+isRGBA);
+	unsigned char* data = stbi_load(imagePath, &imgWidth, &imgHeight, &nrChannels, 3+isRGBA);
 	if (data)
 	{
 		glGenTextures(1, &ID);
-		glActiveTexture(slot);
+		glActiveTexture(ActiveSlot);
 		glBindTexture(GL_TEXTURE_2D, ID);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -34,11 +33,6 @@ Texture::Texture(const char* image, GLenum slot, int isRGBA)
 		std::cout << "Failed to load texture\n";
 	}
 	stbi_image_free(data);
-}
-
-GLenum Texture::getFreeSlot()
-{
-	return GLenum();
 }
 
 void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit)
