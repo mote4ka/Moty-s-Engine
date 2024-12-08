@@ -8,7 +8,7 @@
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>   
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -149,12 +149,13 @@
     <ClCompile Include="Source\Engine\Core\ErrorHandler\Error.cpp" />
     <ClCompile Include="Source\Engine\Core\ErrorHandler\ErrorHandler.cpp" />
     <ClCompile Include="Source\Engine\Core\Light\Light.cpp" />
+    <ClCompile Include="Source\Engine\Core\Maps\Map.cpp" />
     <ClCompile Include="Source\Engine\Core\Mesh\Mesh.cpp" />
     <ClCompile Include="Source\Engine\Core\RHI\OpenGL\Buffers\EBO.cpp" />
     <ClCompile Include="Source\Engine\Core\RHI\OpenGL\Buffers\VAO.cpp" />
     <ClCompile Include="Source\Engine\Core\RHI\OpenGL\Buffers\VBO.cpp" />
     <ClCompile Include="Source\Engine\Core\RHI\OpenGL\loadGl.cpp" />
-    <ClCompile Include="Source\Engine\Core\RHI\OpenGL\Shaders\ShaderClass\getFileContent.cpp" />
+    <ClCompile Include="Source\Engine\Core\RHI\OpenGL\Shaders\ShaderClass\GetFileContent.cpp" />
     <ClCompile Include="Source\Engine\Core\RHI\OpenGL\Shaders\ShaderClass\Shader.cpp" />
     <ClCompile Include="Source\Engine\Core\Texture\Texture.cpp" />
     <ClCompile Include="Source\Engine\Core\Window\Window.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Source\Engine\Core\Camera\Camera.h" />
     <ClInclude Include="Source\Engine\Core\Light\cube.h" />
     <ClInclude Include="Source\Engine\Core\Light\Light.h" />
+    <ClInclude Include="Source\Engine\Core\Maps\Map.h" />
     <ClInclude Include="Source\Engine\Core\Mesh\Mesh.h" />
     <ClInclude Include="Source\Engine\Core\RHI\OpenGL\Buffers\EBO.h" />
     <ClInclude Include="Source\Engine\Core\RHI\OpenGL\Buffers\VAO.h" />

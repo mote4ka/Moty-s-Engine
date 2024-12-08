@@ -10,9 +10,9 @@ Shader::Shader(const char* VertShaderPath, const char* FragShaderPath)
 
 void Shader::Create()
 {
-	std::string vertexCodeStr = getFileContent(VertShaderPath.c_str());
+	std::string vertexCodeStr = Content::GetFileContent(VertShaderPath.c_str());
 	const char* vertexCode = vertexCodeStr.c_str();
-	std::string fragCodeStr = getFileContent(FragShaderPath.c_str());
+	std::string fragCodeStr = Content::GetFileContent(FragShaderPath.c_str());
 	const char* fragCode = fragCodeStr.c_str();
 
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);

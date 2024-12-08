@@ -1,6 +1,6 @@
 #pragma once
 #include "glad/glad.h"
-#include "getFileContent.cpp"
+#include "GetFileContent.cpp"
 #include <string>
 
 class Shader {

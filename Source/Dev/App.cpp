@@ -14,6 +14,8 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "../Engine/Core/Maps/Map.h"
+
 
 class App {
 public:
@@ -51,6 +53,9 @@ public:
 		UI ui(&win, &cam);
 		ImGui::LoadStyles();
 		ImGui::LoadColors();
+
+		//Map level0("C:/Users/moty/source/repos/Moty-s-Engine/Source/Engine/Core/Maps/level0.map");
+		std::string leveldata = Content::GetFileContent("C:/Users/moty/source/repos/Moty-s-Engine/Source/Engine/Core/Maps/level0.map");
 
 		//temporally varies
 		float loc[3] = { 0.0f, 0.0f, 0.0f };
@@ -90,13 +95,13 @@ public:
 				light1.LightColor.y = cl[1];
 				light1.LightColor.z = cl[2];
 				light1.LightColor.w = cl[3];
-			ImGui::DragFloat3("Location", loc, 0.1f);
-			cube1.SetLocation(glm::vec3(loc[0], loc[1], loc[2]));
-			ImGui::DragFloat3("Rotation", rot, 0.1f);
-			cube1.SetRotation(glm::vec3(rot[0], rot[1], rot[2]));
-			if (ImGui::DragFloat3("Scale", sc, 0.1f)) {
-				cube1.SetScale(glm::vec3(sc[0], sc[1], sc[2]));
-			};
+			//ImGui::DragFloat3("Location", loc, 0.1f);
+			////cube1.SetLocation(glm::vec3(loc[0], loc[1], loc[2]));
+			//ImGui::DragFloat3("Rotation", rot, 0.1f);
+			//cube1.SetRotation(glm::vec3(rot[0], rot[1], rot[2]));
+			//if (ImGui::DragFloat3("Scale", sc, 0.1f)) {
+			//	cube1.SetScale(glm::vec3(sc[0], sc[1], sc[2]));
+			//};
 
 			if (ImGui::Button("Reload Shaders")) {
 				cube1.MeshShader.ReloadShaders();
@@ -120,8 +125,25 @@ public:
 			glUniform3f(glGetUniformLocation(cube1.MeshShader.shaderID, "CamPos"), cam.Position.x, cam.Position.y, cam.Position.z);
 			glUniform3f(glGetUniformLocation(cube2.MeshShader.shaderID, "CamPos"), cam.Position.x, cam.Position.y, cam.Position.z);
 
+			float z_counter = 0.0f;
+			float x_counter = 0.0f;
+			for (int i = 0; i < 78; i++) {
+				if (leveldata[i] == '#') {
+					cube1.SetLocation(glm::vec3(0.0f + x_counter, 0.0f, 0.0f + z_counter));
+					cube1.Draw();
+					x_counter++;
+				}
+				if (leveldata[i] == ' ') {
+					x_counter++;
+				}
+				if (leveldata[i] == '\n') {
+					x_counter = 0;
+					z_counter++;
+				}
+			};
+
 			//Draw
-			cube1.Draw();
+			//cube1.Draw();
 			cube2.Draw();
 			light1.Draw();
 

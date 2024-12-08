@@ -53,7 +53,7 @@ int Light::UpdateShadersUniform(GLuint ShaderID)
 		glUniform1i(glGetUniformLocation(ShaderID, "light.Type"), LightType);
 		glUniform4f(glGetUniformLocation(ShaderID, "light.Color"), LightColor.x, LightColor.y, LightColor.z, LightColor.w);
 		glUniform1f(glGetUniformLocation(ShaderID, "light.Power"), Power);
-		glUniform3f(glGetUniformLocation(ShaderID, "light.ambient"), 0.08f, 0.08f, 0.08f);
+		glUniform3f(glGetUniformLocation(ShaderID, "light.ambient"), 0.01f, 0.01f, 0.01f);
 		glUniform3f(glGetUniformLocation(ShaderID, "light.diffuse"), 0.5f, 0.5f, 0.5f);
 		glUniform3f(glGetUniformLocation(ShaderID, "light.specular"), 1.0f, 1.0f, 1.0f);
 	}

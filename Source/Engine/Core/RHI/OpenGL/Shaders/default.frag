@@ -57,7 +57,7 @@ void main()
 	vec3 normalVec = normalize(Normal);
 
 	float diffuse = max(dot(normalVec, LightDirection), 0.0f);
-	float gamma = 2.2f;
+	float gamma = 1.0f;
 	vec3 Diffuse = light.diffuse * att * diffuse * pow(texture(mat.BaseColor, texCoord).rgb, vec3(gamma)) * vec3(light.Power);
 
 	//Specular Lighting
